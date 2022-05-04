@@ -31,7 +31,6 @@ router.post("/", (req, res) => {
         if (err) {
           return res.send(err);
         }
-    
         return res.json({
           results,
         });
@@ -39,11 +38,10 @@ router.post("/", (req, res) => {
 
 });
 
-// Add get by id route
+// Get by id route
 router.get("/:id", (req, res) => {
     const { id } = req.params;
     if (!id) {
-        // send bad request error
         return res.status(400).send("Bad request. Missing parametres.");
     }
     const queryString = `SELECT * FROM messages WHERE entryID = ${mysql.escape(id)}`;
@@ -57,16 +55,14 @@ router.get("/:id", (req, res) => {
         return res.json({
             messages: results,
         });
-    }
-    );
-}
-);
+    });
+});
 
 // Add delete by id route
 router.delete("/:id", (req, res) => {
     const { id } = req.params;
     if (!id) {
-        // send bad request error
+
         return res.status(400).send("Bad request. Missing parametres.");
     }
     const queryString = `DELETE FROM messages WHERE entryID = ${mysql.escape(id)}`;
@@ -80,21 +76,17 @@ router.delete("/:id", (req, res) => {
         return res.json({
             results,
         });
-    }
-    );
-}
-);
+    });
+});
 
 // Add update by id route
 router.put("/:id", (req, res) => {
     const { id } = req.params;
     if (!id) {
-        // send bad request error
         return res.status(400).send("Bad request. Missing parametres.");
     }
     const { senderName, senderMail, receiverMail, messageContent } = req.body;
     if (!senderName || !senderMail || !receiverMail || !messageContent) {
-        // send bad request error
         return res.status(400).send("Bad request. Missing parametres.");
     }
     const queryString = `UPDATE messages SET senderName = ${mysql.escape(senderName)}, senderMail = ${mysql.escape(senderMail)}, receiverMail = ${mysql.escape(receiverMail)}, messageContent = ${mysql.escape(messageContent)} WHERE entryID = ${mysql.escape(id)}`;
@@ -108,12 +100,8 @@ router.put("/:id", (req, res) => {
         return res.json({
             results,
         });
-    }
-    );
-}
-);
-
-
+    });
+});
 
 
 module.exports = router;
